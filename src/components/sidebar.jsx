@@ -1,32 +1,42 @@
-import { useState } from 'react'
-import menu from '../assets/menu-icon.png'
+import dashboard from '../assets/open.png'
+import menu from '../assets/menu.png'
+import person from '../assets/person.png'
+import suitcase from '../assets/suitcase.png'
+import time from '../assets/time.png'
+import calendar from '../assets/calendar.png'
+import clock from '../assets/clock.png'
+import upload from '../assets/upload.png'
+
 
 const Sidebar = () => {
 
-  const [isopen, setIsOpen] = useState(false)
-
   return (
-    <>
-      <div className={`${isopen ? "bg-blue-100 w-48 p-6" : "w-20 p-4"} 
-                flex flex-col items-center transition-all duration-200 ease-in-out h-screen`}>
-        <button
-          onClick={() => setIsOpen(!isopen)}
-          className={`w-10 h-10 text-center bg-blue-300 text-indigo-700 font-bold rounded-full 
-              transition-colors ${isopen ? "self-end" : "self-center"}`}>
-          {isopen ? '<' : '>'}
-        </button>
+    <div className="bg-white w-20 h-[888px] flex flex-col 
+        items-center border-r-[3px] border-r-[#E5EFFF80]">
 
-        <div className='flex gap-2 items-center mt-12'>
-          {isopen && (
-            <div className='text-indigo-800 font-medium'>Dashboard</div>
-          )}
-          <button className='p-2 hover:bg-blue-200 rounded-md transition-colors'>
-            <img className='w-6' src={menu} alt="menu" />
-          </button>
-        </div>
+        {/* Dashboard and Menu */}
+      <div className='flex flex-col gap-4 p-5 border-b-1 border-gray-200'>
+        <div><img src={dashboard} alt="dashboard" /></div>
+        <div><img src={menu} alt="menu" /></div>
       </div>
-    </>
+
+        {/* Person and Suitcase */}
+      <div className='flex flex-col gap-4 p-5 border-b-1 border-gray-200'>
+        <div><img src={person} alt="person" /></div>
+        <div><img src={suitcase} alt="suitcase" /></div>
+      </div>
+
+        {/* Remaining Icons */}
+      <div className='flex flex-col gap-4 p-5 border-b-1 border-gray-200'>
+        <div><img src={time} alt="time" /></div>
+        <div><img src={calendar} alt="calendar" /></div>
+        <div><img src={clock} alt="clock" /></div>
+        <div><img src={upload} alt="upload" /></div>
+      </div>
+
+    </div>
   )
 }
 
 export default Sidebar
+

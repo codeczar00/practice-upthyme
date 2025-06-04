@@ -51,14 +51,14 @@ const AddShiftForm = ({ visible, onClose }) => {
 
                 <select defaultValue="" {...register("day", { required: true })} className="border border-gray-300 rounded-md p-2">
                     <option value="" disabled>Select Day</option>
-                    {['All','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                    {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
                         <option key={day} value={day}>{day}</option>
                     ))}
                 </select>
 
                 <select defaultValue="" {...register("employee", { required: true })} className="border border-gray-300 rounded-md p-2">
                     <option value="" disabled>Select Employee</option>
-                    {['Fadhilah Puspasari', 'Fauni Ambarsari', 'Lili Hugton', 'Rao Rabi'].map(emp => (
+                    {['All', 'Fadhilah Puspasari', 'Fauni Ambarsari', 'Lili Hugton', 'Rao Rabi'].map(emp => (
                         <option key={emp} value={emp}>{emp}</option>
                     ))}
                 </select>
