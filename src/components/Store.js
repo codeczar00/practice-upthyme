@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const useShiftStore = create(persist((set) => ({
+const useShiftStore = create((set) => ({
   shifts: [],
   addShift: (newShift) =>
     set((state) => ({
@@ -11,6 +11,6 @@ const useShiftStore = create(persist((set) => ({
     {
       name: 'shift-storage', 
     }
-));
+);
 
 export default useShiftStore;
