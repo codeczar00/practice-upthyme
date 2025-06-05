@@ -60,11 +60,12 @@ const MainContent = () => {
             <img className="w-4 h-4" src={magic} alt="userchange" />
           </div>
           {week.map((weekDay, index) => {
+
             const [_, dateStr] = weekDay.split(', '); // dateStr = "6/2"
             const matchedEntries = shifts.filter(entry => {
               const entryDate = new Date(entry.date);
               const entryDateStr = `${entryDate.getMonth() + 1}/${entryDate.getDate()}`;
-              return entryDateStr === dateStr;
+              return entryDateStr === dateStr && entry.user === "unassigned";
             });
 
             return (
@@ -74,25 +75,30 @@ const MainContent = () => {
                   Array.from({ length: entry.user === users.name ? Number(entry.spot) - 1 : Number(entry.spot) }).map((_, spotIndex) => (
                     <div
                       key={`${i}-${spotIndex}`}
-                      className='w-full h-auto pl-2 rounded-[10px] flex flex-col border-[1.5px]'
-                      style={{ borderColor: entry.color, boxShadow: `inset 4px 0 4px -2px ${entry.color}` }}
+                      className='w-full h-auto pl-2 rounded-[10px] flex flex-col border-[1.5px] border-l-[4px]'
+                      style={{ borderColor: entry.color, }}
                       title={`${entry.shiftTitle} - ${entry.job}`}
                     >
                       <div className="flex items-center gap-2">
-                        <div className="font-bold text-[#3F4648] text-[12px]">{`${entry.timeFrom.slice(0, 1)}a - ${entry.timeEnd.slice(0, 1)}p`}</div>
+                        <div className="font-bold text-[#3F4648] text-[12px]">
+                          {`${entry.timeFrom.slice(0, entry.timeFrom.indexOf(':'))}${entry.timeFrom.slice(-2)} - ${entry.timeEnd.slice(0, entry.timeEnd.indexOf(':'))}${entry.timeEnd.slice(-2)}`}
+                        </div>
                         <div><img src={persons} alt="bande" /></div>
                       </div>
                       <div className="text-[#3F4648] text-[12px]">{entry.job}</div>
                     </div>
                   ))
                 ))}
-                <button
-                  onClick={openForm}
-                  className={`cursor-pointer hidden ${!showForm ? 'group-hover:block' : ''} text-xl text-blue-600 font-bold mt-3`}
-                  title="Add shift"
-                >
-                  ＋
-                </button>
+
+                {matchedEntries.length > 0 ? null : (
+                  <button
+                    onClick={openForm}
+                    className={`cursor-pointer hidden ${!showForm ? 'group-hover:block' : ''} text-xl text-blue-600 font-bold mt-3`}
+                    title="Add shift"
+                  >
+                    ＋
+                  </button>
+                )}
               </div>
             );
           })}
@@ -119,44 +125,47 @@ const MainContent = () => {
               </div>
             </div>
             {week.map((weekDay, index) => {
-            const [_, dateStr] = weekDay.split(', '); // dateStr = "6/2"
-            const matchedEntries = shifts.filter(entry => {
-              const entryDate = new Date(entry.date);
-              const entryDateStr = `${entryDate.getMonth() + 1}/${entryDate.getDate()}`;
-              return (entryDateStr === dateStr && entry.user === user.name );
-            });
+              const [_, dateStr] = weekDay.split(', '); // dateStr = "6/2"
+              const matchedEntries = shifts.filter(entry => {
+                const entryDate = new Date(entry.date);
+                const entryDateStr = `${entryDate.getMonth() + 1}/${entryDate.getDate()}`;
+                return (entryDateStr === dateStr && entry.user === user.name);
+              });
 
-            return (
-              <div key={index} className='group p-2 flex flex-col gap-1 items-center border-l border-[#EAEAEA]'>
+              return (
+                <div key={index} className='group p-2 flex flex-col gap-1 items-center border-l border-[#EAEAEA]'>
 
-                {matchedEntries.map((entry, i) => (
-                  Array.from({ length: Number(entry.spot) }).map((_, spotIndex) => (
-                    <div
-                      key={`${i}-${spotIndex}`}
-                      className='w-full h-auto pl-2 rounded-[10px] flex flex-col border-[1.5px]'
-                      style={{ borderColor: entry.color, boxShadow: `inset 4px 0 4px -2px ${entry.color}` }}
-                      title={`${entry.shiftTitle} - ${entry.job}`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="font-bold text-[#3F4648] text-[12px]">
-                          {`${entry.timeFrom.slice(0, entry.timeFrom.indexOf(':'))}${entry.timeFrom.slice(-2)} - ${entry.timeEnd.slice(0, entry.timeEnd.indexOf(':'))}${entry.timeEnd.slice(-2)}`}
+                  {matchedEntries.map((entry, i) => (
+                    Array.from({ length: Number(entry.spot) }).map((_, spotIndex) => (
+                      <div
+                        key={`${i}-${spotIndex}`}
+                        className='w-full h-auto pl-2 rounded-[10px] flex flex-col border-[1.5px] border-l-[4px]'
+                        style={{ borderColor: entry.color, }}
+                        title={`${entry.shiftTitle} - ${entry.job}`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className="font-bold text-[#3F4648] text-[12px]">
+                            {`${entry.timeFrom?.slice(0, entry.timeFrom.indexOf(':'))}${entry.timeFrom?.slice(-2)} - ${entry.timeEnd?.slice(0, entry.timeEnd.indexOf(':'))}${entry.timeEnd?.slice(-2)}`}
+                          </div>
+                          <div><img src={persons} alt="bande" /></div>
                         </div>
-                        <div><img src={persons} alt="bande" /></div>
+                        <div className="text-[#3F4648] text-[12px]">{entry.job}</div>
                       </div>
-                      <div className="text-[#3F4648] text-[12px]">{entry.job}</div>
-                    </div>
-                  ))
-                ))}
-                <button
-                  onClick={openForm}
-                  className={`cursor-pointer hidden ${!showForm ? 'group-hover:block' : ''} text-xl text-blue-600 font-bold mt-3`}
-                  title="Add shift"
-                >
-                  ＋
-                </button>
-              </div>
-            );
-          })}
+                    ))
+                  ))}
+
+                  {matchedEntries.length > 0 ? null : (
+                    <button
+                      onClick={openForm}
+                      className={`cursor-pointer hidden ${!showForm ? 'group-hover:block' : ''} text-xl text-blue-600 font-bold mt-3`}
+                      title="Add shift"
+                    >
+                      ＋
+                    </button>
+                  )}
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>

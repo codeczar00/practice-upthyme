@@ -21,8 +21,32 @@ const AddShiftForm = ({ visible, onClose }) => {
     const addShift = useShiftStore((state) => state.addShift)
 
     const onSubmit = (data) => {
-        addShift(data);
-        console.log(data);
+        const { spot, user, ...rest } = data;
+        const totalSpots = parseInt(spot);
+
+        const shiftsToAdd = [];
+
+        if (user) {
+            // One spot assigned to the selected user
+            shiftsToAdd.push({
+                ...rest,
+                spot: 1,
+                user
+            });
+        }
+
+        const remainingSpots = user ? totalSpots - 1 : totalSpots;
+
+        if (remainingSpots > 0) {
+            shiftsToAdd.push({
+                ...rest,
+                spot: remainingSpots,
+                user: "unassigned"
+            });
+        }
+
+        shiftsToAdd.forEach(shift => addShift(shift));
+
         reset();
         onClose();
     };
