@@ -26,28 +26,31 @@ const AddShiftForm = ({ visible, onClose }) => {
 
         const shiftsToAdd = [];
 
-        if (user) {
-            // One spot assigned to the selected user
+        for (let i = 0; i < totalSpots; i++) {
             shiftsToAdd.push({
+                id: crypto.randomUUID(), // Unique ID for each shift
                 ...rest,
-                spot: 1,
-                user
-            });
-        }
-
-        const remainingSpots = user ? totalSpots - 1 : totalSpots;
-
-        if (remainingSpots > 0) {
-            shiftsToAdd.push({
-                ...rest,
-                spot: remainingSpots,
-                user: "unassigned"
+                user: i === 0 && user ? user : users.find(u => u.name === 'Unassigned Shifts').name,
             });
         }
 
         shiftsToAdd.forEach(shift => addShift(shift));
 
-        reset();
+        setSpotValue(1);
+        setSelectedColor(colors[0]);
+        setEnabled(false);
+
+        reset({
+            date: '',
+            timeFrom: '',
+            timeEnd: '',
+            shiftTitle: '',
+            job: '',
+            spot: 1,
+            color: colors[0],
+            user: ''
+        });
+
         onClose();
     };
 
@@ -186,11 +189,13 @@ const AddShiftForm = ({ visible, onClose }) => {
                         className='border border-gray-300 rounded-[12px] px-2 py-1 w-[350px] h-10'
                         {...register("user")}>
                         <option value="">Select User</option>
-                        {users.map((user, index) => (
-                            <option key={index} value={user.name}>
-                                {user.name}
-                            </option>
-                        ))}
+                        {users
+                            .filter(user => user.name !== 'Unassigned Shifts')
+                            .map((user, index) => (
+                                <option key={index} value={user.name}>
+                                    {user.name}
+                                </option>
+                            ))}
                     </select>
                 </div>
                 <hr className="mx-4 border-gray-300" />

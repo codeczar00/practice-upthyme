@@ -4,24 +4,29 @@ import lili from '../assets/lili.png'
 
 
 export const users = [
-    {
-        name: 'Fadhila Puspasari',
-        icon: fadhila,
-        shift: '0',
-        bar: '0'
-    },
-    {
-        name: 'Fauni Ambarsari',
-        icon: fauni,
-        shift: '12:00',
-        bar: '2'
-    },
-    {
-        name: 'Lili Hougton',
-        icon: lili,
-        shift: '42:00',
-        bar: '7'
-    }
+  {
+    name: 'Unassigned Shifts',
+    shift: '0',
+    bar: '0'
+  },
+  {
+    name: 'Fadhila Puspasari',
+    icon: fadhila,
+    shift: '0',
+    bar: '0'
+  },
+  {
+    name: 'Fauni Ambarsari',
+    icon: fauni,
+    shift: '12:00',
+    bar: '2'
+  },
+  {
+    name: 'Lili Hougton',
+    icon: lili,
+    shift: '42:00',
+    bar: '7'
+  }
 ]
 
 function getFormattedWeek(startDateStr) {
@@ -33,8 +38,8 @@ function getFormattedWeek(startDateStr) {
 
     return date.toLocaleDateString('en-US', {
       weekday: 'short',
-      month: 'numeric', 
-      day: 'numeric',   
+      month: 'numeric',
+      day: 'numeric',
     });
   });
 }

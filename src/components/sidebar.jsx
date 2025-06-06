@@ -11,7 +11,7 @@ import upload from '../assets/upload.png'
 const Sidebar = () => {
 
   return (
-    <div className="bg-white w-20 h-[888px] flex flex-col 
+    <div className="bg-white w-20 h-[780px] flex flex-col 
         items-center border-r-[3px] border-r-[#E5EFFF80]">
 
         {/* Dashboard and Menu */}
